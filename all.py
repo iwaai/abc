@@ -49,52 +49,40 @@ else:
 # each process in an array called Created Processes. Also display the process id of the terminated child to 
 # understand the hierarchy of termination of each child process.
 
-import os
-import time
 
-created_processes = []
+import os,time
 
-pid = os.fork()
+created_process = []
+ret = os.fork()
 
-if pid == 0:
-    # This is the first child process
-    print("First child process, pid =", os.getpid())
-    created_processes.append(os.getpid())
-
-    # Create the second child process
-    pid1 = os.fork()
-    if pid1 == 0:
-        # This is the second child process
-        print("Second child process, pid =", os.getpid())
-        created_processes.append(os.getpid())
-
-        # Create the third child process
-        pid2 = os.fork()
-        if pid2 == 0:
-            # This is the third child process
-            print("Third child process, pid =", os.getpid())
-            created_processes.append(os.getpid())
-
-            # Exit immediately
-            os._exit(0)
-        else:
-            # Wait for the third child process to exit
-            pid3, status = os.waitpid(pid2, os.WSTOPSIG | os.WEXITED)
-            print("Third child process has finished with pid:", pid3)
-            # Exit immediately
-            os._exit(0)
-    else:
-        # Wait for the second child process to exit
-        pid2, status = os.waitpid(pid1, os.WSTOPSIG | os.WEXITED)
-        print("Second child process has finished with pid:", pid2)
-        # Exit immediately
-        os._exit(0)
+if ret == 0:
+	print("Super master child process")
+	created_process.append(os.getpid())
+	
+	c1 = os.fork()
+	
+	if c1 == 0:
+		print("super wale ka bacha number 1")
+		created_process.append(os.getpid())
+		
+	else:
+		created_process.append(os.getpid())
+		c2 = os.fork()
+		created_process.append(os.getpid())
+		
+		if c2 == 0:
+			print("super wale ka bacha number 2")
+			created_process.append(os.getpid())
+		else:
+			created_process.append(os.getpid())
+			os.wait()
+			os.wait()
 else:
-    # Wait for the first child process to exit
-    pid1, status = os.waitpid(pid, os.WSTOPSIG | os.WEXITED)
-    print("First child process has finished with pid:", pid1)
-    # Print the list of created processes
-    print("Created processes:", created_processes)
+	created_process.append(os.getpid())
+	os.wait()
+	
+	
+print(created_process)
 
 
 #============ array create in parent , sort in child =============================================
@@ -102,38 +90,40 @@ else:
 # . Write a program in which a parent process will initialize an array, and child process will sort this array. Use wait() 
 # and sleep() methods to achieve the synchronization such that parent process should run first.
 
-import os
-import time
 
-# Initialize the array in the parent process
-arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
-print("Array before sorting:", arr)
+import os,time
 
-pid = os.fork()
+created_process = []
+ret = os.fork()
 
-if pid == 0:
-    # This is the child process
-    print("Child process, pid =", os.getpid())
-
-    # Sort the array
-    arr.sort()
-
-    # Wait for 1 second
-    time.sleep(1)
-    print("Array after sorting:", arr)
-    # Exit immediately
-    os._exit(0)
+if ret == 0:
+	print("Super master child process")
+	created_process.append(os.getpid())
+	
+	c1 = os.fork()
+	
+	if c1 == 0:
+		print("super wale ka bacha number 1")
+		created_process.append(os.getpid())
+		
+	else:
+		created_process.append(os.getpid())
+		c2 = os.fork()
+		created_process.append(os.getpid())
+		
+		if c2 == 0:
+			print("super wale ka bacha number 2")
+			created_process.append(os.getpid())
+		else:
+			created_process.append(os.getpid())
+			os.wait()
+			os.wait()
 else:
-    # This is the parent process
-    print("Parent process, pid =", os.getpid())
-
-    # Wait for the child process to exit
-    os.wait()
-
-    # Wait for 1 second
-    time.sleep(1)
-    print("Array after sorting:", arr)
-
+	created_process.append(os.getpid())
+	os.wait()
+	
+	
+print(created_process)
 
 
 
@@ -463,7 +453,7 @@ p5.join()
 print(v.value)
 
 
-LAB 12                     2 PROCESSES BAN RAHE DONO ME ADHI ADHI LIST JA  RAHI OR SQUARE HO RAH
+#========================LAB 12==================== 2 PROCESSES BAN RAHE DONO ME ADHI ADHI LIST JA  RAHI OR SQUARE HO RAH
 
 from multiprocessing import Process,Array
 import random
@@ -485,7 +475,7 @@ print(arr[:])
 
 
 
-COMMAND LINE SE INPUT LE RAHE
+# =========COMMAND LINE SE INPUT LE RAHE
 
 import sys
 from multiprocessing import Process,Pipe
