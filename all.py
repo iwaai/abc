@@ -1205,3 +1205,40 @@ case $option in
   d) remove_file $file_or_folder;;
   *) echo "Error: Invalid option.";;
 esac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #sahi wala sort multiprocessing
+from multiprocessing import Pipe,Array,Process, Value
+    
+def child(arr,c_conn,v):
+    print(arr[:])
+    print(v.value)
+    
+    v = value+2.1
+    arr = sorted(arr[:])
+    print(arr,v)
+    c_conn.send("done")
+    c_conn.close()
+
+    arr = Array('i',[5,2,8])
+    val = Value('d',1.0)
+    p_conn,c_conn = Pipe()
+    p = Process(target =child, args =(arr,c_conn,val,))
+    p.start()
+    join
+    print(P_conn.recv())
+    p_conn.close()
