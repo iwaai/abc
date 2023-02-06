@@ -979,3 +979,229 @@ if __name__ == '__main__':
     is_safe_state(processes, avail, need, allot)
 
 
+
+################################n lab quiz wala question
+
+#!/bin/bash
+
+function count_lines_type() {
+  file=$1
+  if [ ! -f $file ]; then
+    echo "Error: File $file does not exist."
+    return 1
+  fi
+  lines=$(wc -l < $file)
+  type=$(file $file | awk '{print $2}')
+  echo "The number of lines in $file is $lines and its type is $type."
+}
+
+function edit_file() {
+  file=$1
+  if [ ! -f $file ]; then
+    echo "Error: File $file does not exist."
+    return 1
+  fi
+  if [ ! -w $file ]; then
+    echo "The file is not editable. Changing its permissions..."
+    chmod +w $file
+  fi
+  nano $file
+}
+
+function copy_folder() {
+  folder=$1
+  backup_folder="backup/$folder"
+  if [ ! -d $folder ]; then
+    echo "Error: Folder $folder does not exist."
+    return 1
+  fi
+  if [ ! -d "backup" ]; then
+    echo "Creating backup folder..."
+    mkdir backup
+  fi
+  echo "Copying $folder to $backup_folder..."
+  cp -r $folder $backup_folder
+}
+
+function remove_file() {
+  file=$1
+  if [ ! -f $file ]; then
+    echo "Error: File $file does not exist."
+    return 1
+  fi
+  lines=$(wc -l < $file)
+  if [ $lines -gt 1000 ]; then
+    echo "The number of lines in $file is greater than 1000. Removing file..."
+    rm $file
+  fi
+}
+
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 <option> <file/folder>"
+  echo "Options:"
+  echo "  a - Count the number of lines and type of file"
+  echo "  b - Edit file"
+  echo "  c - Copy folder to backup folder"
+  echo "  d - Remove file if number of lines is greater than 1000"
+  exit 1
+fi
+
+option=$1
+file_or_folder=$2
+
+case $option in
+  a) count_lines_type $file_or_folder;;
+  b) edit_file $file_or_folder;;
+  c) copy_folder $file_or_folder;;
+  d) remove_file $file_or_folder;;
+  *) echo "Error: Invalid option.";;
+esac
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################################bash/shell
+
+###############roll number ka average (less than or equal to)
+#!/bin/bash
+
+# Prompt the user for the roll number
+read -p "Enter your roll number: " roll_number
+
+# Initialize the sum and count of even numbers
+sum=0
+count=0
+
+# Loop through all numbers less than or equal to the roll number
+for i in $(seq 0 $roll_number); do
+  # Check if the number is even
+  if [ $(($i % 2)) -eq 0 ]; then
+    # Add the even number to the sum
+    sum=$((sum + i))
+    # Increment the count of even numbers
+    count=$((count + 1))
+  fi
+done
+
+# Calculate the average of all even numbers
+average=$(echo "scale=2; $sum / $count" | bc)
+
+# Print the result
+echo "The average of all even numbers less than or equal to $roll_number is $average"
+
+
+####################### parameter number with while
+#!/bin/bash
+
+# Initialize the minimum and maximum values
+min=1
+max=$#
+
+# Loop through all the parameters
+while [ $min -le $max ]; do
+  # Display the parameter number and value
+  echo "Parameter $min = ${!min}"
+  # Increment the minimum value
+  min=$((min + 1))
+done
+
+
+
+#######################with unitl
+#!/bin/bash
+
+# Initialize the minimum and maximum values
+min=1
+max=$#
+
+# Loop through all the parameters
+until [ $min -gt $max ]; do
+  # Display the parameter number and value
+  echo "Parameter $min = ${!min}"
+  # Increment the minimum value
+  min=$((min + 1))
+done
+
+
+#########################quiz (3 quiz thy deklena yehi ha ya koi or)
+#!/bin/bash
+
+function count_lines_type() {
+  file=$1
+  if [ ! -f $file ]; then
+    echo "Error: File $file does not exist."
+    return 1
+  fi
+  lines=$(wc -l < $file)
+  type=$(file $file | awk '{print $2}')
+  echo "The number of lines in $file is $lines and its type is $type."
+}
+
+function edit_file() {
+  file=$1
+  if [ ! -f $file ]; then
+    echo "Error: File $file does not exist."
+    return 1
+  fi
+  if [ ! -w $file ]; then
+    echo "The file is not editable. Changing its permissions..."
+    chmod +w $file
+  fi
+  nano $file
+}
+
+function copy_folder() {
+  folder=$1
+  backup_folder="backup/$folder"
+  if [ ! -d $folder ]; then
+    echo "Error: Folder $folder does not exist."
+    return 1
+  fi
+  if [ ! -d "backup" ]; then
+    echo "Creating backup folder..."
+    mkdir backup
+  fi
+  echo "Copying $folder to $backup_folder..."
+  cp -r $folder $backup_folder
+}
+
+function remove_file() {
+  file=$1
+  if [ ! -f $file ]; then
+    echo "Error: File $file does not exist."
+    return 1
+  fi
+  lines=$(wc -l < $file)
+  if [ $lines -gt 1000 ]; then
+    echo "The number of lines in $file is greater than 1000. Removing file..."
+    rm $file
+  fi
+}
+
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 <option> <file/folder>"
+  echo "Options:"
+  echo "  a - Count the number of lines and type of file"
+  echo "  b - Edit file"
+  echo "  c - Copy folder to backup folder"
+  echo "  d - Remove file if number of lines is greater than 1000"
+  exit 1
+fi
+
+option=$1
+file_or_folder=$2
+
+case $option in
+  a) count_lines_type $file_or_folder;;
+  b) edit_file $file_or_folder;;
+  c) copy_folder $file_or_folder;;
+  d) remove_file $file_or_folder;;
+  *) echo "Error: Invalid option.";;
+esac
